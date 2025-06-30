@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poultry Health Scanner - Farm Theme</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Merriweather:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --background-cream: #fff9f0; /* Warm cream background */
+        --primary-sand: #f0e6d2; /* Light sand color */
+        --card-white: #ffffff; /* Pure white cards */
+        --accent-terracotta: #e27d60; /* Warm terracotta accent */
+        --accent-leaf: #8fb996; /* Fresh leaf green secondary accent */
+        --text-dark: #3a3a3a; /* Soft dark text */
+        --text-muted: #7a7a7a; /* Muted text */
+        --border-warm: #e0d5c5; /* Warm light border */
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--background-cream);
+        color: var(--text-dark);
+        line-height: 1.6;
+      }
+
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--accent-terracotta),
+          var(--accent-leaf)
+        );
+        color: white;
+        padding: 25px 20px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      header h1 {
+        font-family: "Merriweather", serif;
+        margin: 0;
+        font-size: 2.3em;
+        letter-spacing: 0.5px;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      .main-container {
+        display: flex;
+        flex-direction: column;
+        min-height: calc(100vh - 140px);
+      }
+
+      @media (min-width: 992px) {
+        .main-container {
+          flex-direction: row;
+        }
+      }
+
+      .upload-section {
+        flex: 1;
+        padding: 30px;
+        background-color: var(--primary-sand);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .info-section {
+        flex: 1;
+        padding: 30px;
+        background-color: var(--card-white);
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .card {
+        background: var(--card-white);
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 30px;
+        border: 1px solid var(--border-warm);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+      }
+
+      .card h2 {
+        font-family: "Merriweather", serif;
+        color: var(--accent-terracotta);
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 1.8em;
+        text-align: center;
+        border-bottom: 2px solid var(--border-warm);
+        padding-bottom: 10px;
+      }
+
+      .upload-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed var(--accent-terracotta);
+        padding: 40px;
+        cursor: pointer;
+        text-align: center;
+        min-height: 300px;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.7);
+        transition: all 0.3s ease;
+      }
+
+      .upload-card:hover {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-color: var(--accent-leaf);
+      }
+
+      .upload-card i {
+        font-size: 60px;
+        color: var(--accent-terracotta);
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .upload-card:hover i {
+        color: var(--accent-leaf);
+        transform: scale(1.1);
+      }
+
+      .upload-card h2 {
+        font-family: "Merriweather", serif;
+        color: var(--accent-terracotta);
+        margin-bottom: 15px;
+      }
+
+      .upload-card p {
+        color: var(--text-muted);
+        font-size: 1.1em;
+        margin-bottom: 25px;
+        max-width: 400px;
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+
+      input[type="submit"] {
+        background: linear-gradient(
+          to right,
+          var(--accent-terracotta),
+          var(--accent-leaf)
+        );
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        cursor: pointer;
+        border-radius: 30px;
+        margin-top: 15px;
+        font-weight: 500;
+        font-size: 1.1em;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        display: none;
+      }
+
+      input[type="submit"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px;
+        background-color: var(--primary-sand);
+        color: var(--text-muted);
+        font-size: 0.9em;
+        border-top: 1px solid var(--border-warm);
+      }
+
+      .disease-info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .disease-info {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        background-color: var(--primary-sand);
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        border-left: 4px solid var(--accent-terracotta);
+      }
+
+      .disease-info:hover {
+        transform: translateX(5px);
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .disease-info i {
+        font-size: 32px;
+        color: var(--accent-terracotta);
+        margin-bottom: 15px;
+      }
+
+      .disease-info h3 {
+        font-family: "Merriweather", serif;
+        margin: 0 0 10px 0;
+        color: var(--text-dark);
+        font-size: 1.2em;
+      }
+
+      .disease-info p {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 0.95em;
+        line-height: 1.5;
+      }
+
+      #loader-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 249, 240, 0.9);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        color: var(--accent-terracotta);
+        font-family: "Merriweather", serif;
+        font-size: 1.5em;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+
+      #loader-overlay.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .loader {
+        border: 8px solid var(--primary-sand);
+        border-top: 8px solid var(--accent-terracotta);
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      #image-preview {
+        max-width: 100%;
+        max-height: 250px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: none;
+        border: 2px solid var(--accent-terracotta);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .upload-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        text-align: center;
+      }
+
+      @media (max-width: 991px) {
+        .main-container {
+          flex-direction: column;
+        }
+
+        .info-section {
+          box-shadow: none;
+        }
+
+        .upload-section {
+          order: -1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loader-overlay">
+      <div class="loader"></div>
+      <p>Scanning poultry health...</p>
+    </div>
+
+    <header>
+      <h1>Poultry Health Scanner</h1>
+    </header>
+
+    <div class="main-container">
+      <section class="upload-section">
+        <div class="card">
+          <div class="upload-card" id="uploadCard">
+            <div class="upload-content" id="uploadContent">
+              <i class="fas fa-camera-retro"></i>
+              <h2>Upload Poultry Image</h2>
+              <p id="upload-instructions">
+                Click to upload or drag & drop a clear photo of your poultry for
+                health analysis
+              </p>
+              <img id="image-preview" src="#" alt="Image Preview" />
+            </div>
+            <form id="uploadForm" method="POST" enctype="multipart/form-data">
+              <input
+                type="file"
+                id="fileInput"
+                name="file"
+                accept="image/*"
+                required
+              />
+              <input type="submit" value="Scan Image" id="analyzeButton" />
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="info-section">
+        <div class="card">
+          <h2>Common Poultry Conditions</h2>
+          <div class="disease-info-grid">
+            <div class="disease-info">
+              <i class="fas fa-lungs-virus"></i>
+              <h3>Respiratory Infections</h3>
+              <p>
+                Identify symptoms like coughing, sneezing, and nasal discharge
+                that may indicate respiratory diseases.
+              </p>
+            </div>
+            <div class="disease-info">
+              <i class="fas fa-bug"></i>
+              <h3>Parasitic Infestations</h3>
+              <p>
+                Detect external parasites like mites or internal worms that
+                affect poultry health and productivity.
+              </p>
+            </div>
+            <div class="disease-info">
+              <i class="fas fa-procedures"></i>
+              <h3>Nutritional Deficiencies</h3>
+              <p>
+                Spot signs of vitamin or mineral deficiencies that impact growth
+                and egg production.
+              </p>
+            </div>
+            <div class="disease-info">
+              <i class="fas fa-feather-alt"></i>
+              <h3>Healthy Indicators</h3>
+              <p>
+                Recognize optimal health markers including bright eyes, clean
+                feathers, and active behavior.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer>© 2025 Poultry Health Scanner | Farm Animal Diagnostics</footer>
+
+    <script>
+      const fileInput = document.getElementById("fileInput");
+      const uploadForm = document.getElementById("uploadForm");
+      const loaderOverlay = document.getElementById("loader-overlay");
+      const imagePreview = document.getElementById("image-preview");
+      const uploadInstructions = document.getElementById("upload-instructions");
+      const uploadIcon = document.querySelector(".upload-card i");
+      const analyzeButton = document.getElementById("analyzeButton");
+      const uploadCardH2 = document.querySelector(".upload-card h2");
+      const uploadCard = document.getElementById("uploadCard");
+
+      // Handle drag and drop functionality
+      uploadCard.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        uploadCard.style.borderColor = "var(--accent-leaf)";
+        uploadCard.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+      });
+
+      uploadCard.addEventListener("dragleave", () => {
+        uploadCard.style.borderColor = "var(--accent-terracotta)";
+        uploadCard.style.backgroundColor = "rgba(255, 255, 255, 0.7)";
+      });
+
+      uploadCard.addEventListener("drop", (e) => {
+        e.preventDefault();
+        uploadCard.style.borderColor = "var(--accent-terracotta)";
+        uploadCard.style.backgroundColor = "rgba(255, 255, 255, 0.7)";
+
+        if (e.dataTransfer.files.length) {
+          fileInput.files = e.dataTransfer.files;
+          const event = new Event("change");
+          fileInput.dispatchEvent(event);
+        }
+      });
+
+      uploadCard.addEventListener("click", function (event) {
+        if (event.target !== analyzeButton) {
+          fileInput.click();
+        }
+      });
+
+      fileInput.addEventListener("change", function () {
+        const file = this.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            imagePreview.src = e.target.result;
+            imagePreview.style.display = "block";
+            uploadInstructions.style.display = "none";
+            uploadIcon.style.display = "none";
+            uploadCardH2.style.display = "none";
+            analyzeButton.style.display = "block";
+          };
+          reader.readAsDataURL(file);
+        } else {
+          imagePreview.src = "#";
+          imagePreview.style.display = "none";
+          uploadInstructions.style.display = "block";
+          uploadIcon.style.display = "block";
+          uploadCardH2.style.display = "block";
+          analyzeButton.style.display = "none";
+        }
+      });
+
+      uploadForm.addEventListener("submit", function (event) {
+        if (!fileInput.files[0]) {
+          event.preventDefault();
+          alert("Please select an image to scan.");
+          return;
+        }
+        loaderOverlay.classList.add("show");
+      });
+
+      window.addEventListener("pageshow", function (event) {
+        if (event.persisted) {
+          loaderOverlay.classList.remove("show");
+        }
+      });
+    </script>
+  </body>
+</html>
